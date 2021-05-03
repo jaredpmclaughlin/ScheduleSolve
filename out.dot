@@ -1,0 +1,3 @@
+digraph all {
+"CSCI3040 FA21" -> "CSCI2020 SP21"[label=5];
+}
