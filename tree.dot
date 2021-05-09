@@ -1,2 +1,8 @@
 digraph tree {
+A -> E[label=1];
+A -> C[label=2];
+E -> D[label=5];
+D -> M[label=11];
+D -> Q[label=12];
+M -> X[label=19];
 }

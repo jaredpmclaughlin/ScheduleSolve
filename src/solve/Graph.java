@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Graph<T extends Comparable<T>> {
 	
-	public class Node {
+	public class Vertex {
 		private T data;
 		private int distance = -1; // use negative to represent infinity
 		
@@ -29,11 +29,11 @@ public class Graph<T extends Comparable<T>> {
 		private ArrayList<Pair> adjacent = new ArrayList<Pair>();
 		private ArrayList<Pair> children = new ArrayList<Pair>();
 		
-		Node(){
+		Vertex(){
 			this(null);
 		}
 		
-		Node(T data){
+		Vertex(T data){
 			this.data = data;
 		}
 		
@@ -74,7 +74,7 @@ public class Graph<T extends Comparable<T>> {
 		
 		public void removePath(int vertice, int weight) {
 			Pair tmp = new Pair(vertice,weight);
-			Iterator<Graph<T>.Node.Pair> mPair = this.children();
+			Iterator<Graph<T>.Vertex.Pair> mPair = this.children();
 			
 			while(mPair.hasNext()) {
 				tmp = mPair.next();
@@ -98,32 +98,32 @@ public class Graph<T extends Comparable<T>> {
 		}
 	} 
 
-	private ArrayList<Node> nodes = new ArrayList<Node>();
+	private ArrayList<Vertex> nodes = new ArrayList<Vertex>();
 	
-	public void labelAll() {
+	public void labelAllShortest() {
 		this.nodes.get(0).setDistance(0);
 		for(int i=0; i < nodes.size(); i++) {
-			this.labelNeighbors(i);
+			this.labelShortestNeighbors(i);
 		}
 	}
 	
-	private void labelNeighbors(int index) {
+	private void labelShortestNeighbors(int index) {
 		// visited represents the node we are visiting to see it's neighbors
-		Node visited = nodes.get(index);
-		Node tmpNode;
+		Vertex visited = nodes.get(index);
+		Vertex tmpNode;
 		
 		// got to each of the neighbors
-		Iterator<Graph<T>.Node.Pair> neighborsIT = visited.adjacents();
+		Iterator<Graph<T>.Vertex.Pair> neighborsIT = visited.adjacents();
 		while(neighborsIT.hasNext()) {
-			Graph<T>.Node.Pair nPair = neighborsIT.next();
-			tmpNode = this.getNodebyIndex(nPair.getVertice()-1);
+			Graph<T>.Vertex.Pair nPair = neighborsIT.next();
+			tmpNode = this.getVertexbyIndex(nPair.getVertice()-1);
 			if(tmpNode.getDistance() == -1) {		
 				tmpNode.setDistance(nPair.getWeight()+visited.getDistance());
 				visited.addPath(nPair.getVertice(), tmpNode.getDistance());
 			}else {
 				if(nPair.getWeight()+visited.getDistance() < tmpNode.getDistance()) {
 					// replacing a path that exists
-					this.removeAllPathsTo(nPair.getVertice());
+					this.removeAllEdgesTo(nPair.getVertice());
 					tmpNode.setDistance(nPair.getWeight()+visited.getDistance());
 					visited.addPath(nPair.getVertice(), tmpNode.getDistance());
 				}
@@ -131,12 +131,12 @@ public class Graph<T extends Comparable<T>> {
 		}
 	}
 	
-	private void removeAllPathsTo(int vertice) {
+	private void removeAllEdgesTo(int vertice) {
 		// go through each node
 		for(int i=0; i < nodes.size(); i++) {
-			Iterator<Graph<T>.Node.Pair> pathsIT = this.nodes.get(i).children();
+			Iterator<Graph<T>.Vertex.Pair> pathsIT = this.nodes.get(i).children();
 			while( pathsIT.hasNext()) {
-				Graph<T>.Node.Pair tmp = pathsIT.next();
+				Graph<T>.Vertex.Pair tmp = pathsIT.next();
 				if(tmp.getVertice() == (vertice)) {
 					this.nodes.get(i).removePath(vertice, tmp.getWeight());
 				}
@@ -145,31 +145,31 @@ public class Graph<T extends Comparable<T>> {
 		}
 	}
 
-	public void addNode(T data) {
-		nodes.add(new Node(data));
+	public void addVertex(T data) {
+		nodes.add(new Vertex(data));
 	}
 	
 	public void addAdjacent(T to, T adjacent, int weight) {
 		//int toIndex = this.getIndex(to);
 		int aIndex = this.getIndex(adjacent);
-		Node tmp = this.getNode(to);
+		Vertex tmp = this.getVertex(to);
 		tmp.addAdjacent(aIndex, weight);
 	}
 
-	public Node getNode(T data) {
-		for (Node tmp : this.nodes ) {
+	public Vertex getVertex(T data) {
+		for (Vertex tmp : this.nodes ) {
 			if(tmp.getData() == data) return tmp;
 		}
 		return null;
 	}
 	
-	public Node getNodebyIndex(int index) {
+	public Vertex getVertexbyIndex(int index) {
 		return nodes.get(index);
 	}
 	
 	private int getIndex(T data) {
 		int index = 0;
-		for(Node tmp : this.nodes) {
+		for(Vertex tmp : this.nodes) {
 			index++;
 			if(tmp.getData() == data) return index;
 		}
@@ -178,7 +178,7 @@ public class Graph<T extends Comparable<T>> {
 	
 	public Iterator<T> iterator() {
         Iterator<T> it = new Iterator<T>() {
-        Iterator<Node> iter = nodes.iterator();
+        Iterator<Vertex> iter = nodes.iterator();
         	
             @Override
             public boolean hasNext() {

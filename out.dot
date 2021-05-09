@@ -1,3 +1,12 @@
 digraph all {
-"CSCI3040 FA21" -> "CSCI2020 SP21"[label=5];
+A -> E[label=1];
+A -> C[label=2];
+E -> C[label=3];
+E -> D[label=4];
+C -> D[label=5];
+D -> M[label=6];
+D -> X[label=20];
+D -> Q[label=7];
+M -> X[label=8];
+Q -> X[label=9];
 }

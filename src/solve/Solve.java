@@ -13,14 +13,14 @@ public class Solve {
 		DotWriter dotFile = new DotWriter("out.dot");
 		DotWriter treeFile = new DotWriter("tree.dot");
 
-/*
-		done.addNode("A");
-		done.addNode("E");
-		done.addNode("C");
-		done.addNode("D");
-		done.addNode("M");
-		done.addNode("Q");
-		done.addNode("X");
+
+		done.addVertex("A");
+		done.addVertex("E");
+		done.addVertex("C");
+		done.addVertex("D");
+		done.addVertex("M");
+		done.addVertex("Q");
+		done.addVertex("X");
 		
 		done.addAdjacent("A", "E", 1);
 		done.addAdjacent("A", "C", 2);
@@ -34,14 +34,15 @@ public class Solve {
 		done.addAdjacent("Q", "X", 9);
 		
 		
-		done.labelAll();
+		done.labelAllShortest();
 		
-		System.out.println( done.getNode("Q").getDistance());
-*/
-		done.addNode("\"CSCI3040 FA21\"");
-		done.addNode("\"CSCI2020 SP21\"");
+		System.out.println( done.getVertex("Q").getDistance());
+
+		/*
+		done.addVertex("\"CSCI3040 FA21\"");
+		done.addVertex("\"CSCI2020 SP21\"");
 		done.addAdjacent("\"CSCI3040 FA21\"", "\"CSCI2020 SP21\"", 5);
-		
+		*/
 		treeFile.writeTree(done, "tree");
 		dotFile.write(done, "all");
 		

@@ -72,11 +72,11 @@ public class DotWriter {
 			
 			while(tmp1.hasNext()) {
 				String node = tmp1.next();
-				Iterator<Graph<String>.Node.Pair> tmp2 = input.getNode(node).adjacents();
+				Iterator<Graph<String>.Vertex.Pair> tmp2 = input.getVertex(node).adjacents();
 				while(tmp2.hasNext()) {
 					
-					Graph<String>.Node.Pair tmp3 = tmp2.next();					
-					Graph<String>.Node child = input.getNodebyIndex(tmp3.vertice-1);
+					Graph<String>.Vertex.Pair tmp3 = tmp2.next();					
+					Graph<String>.Vertex child = input.getVertexbyIndex(tmp3.vertice-1);
 
 					this.writeParentChild(String.valueOf(node), String.valueOf(child.getData()), String.valueOf(tmp3.weight));
 				}
@@ -130,11 +130,11 @@ public class DotWriter {
 			
 			while(tmp1.hasNext()) {
 				String node = tmp1.next();
-				Iterator<Graph<String>.Node.Pair> tmp2 = input.getNode(node).children();
+				Iterator<Graph<String>.Vertex.Pair> tmp2 = input.getVertex(node).children();
 				while(tmp2.hasNext()) {
 					
-					Graph<String>.Node.Pair tmp3 = tmp2.next();
-					Graph<String>.Node child = input.getNodebyIndex(tmp3.vertice-1);
+					Graph<String>.Vertex.Pair tmp3 = tmp2.next();
+					Graph<String>.Vertex child = input.getVertexbyIndex(tmp3.vertice-1);
 					
 					this.writeParentChild(String.valueOf(node), String.valueOf(child.getData()), String.valueOf(tmp3.weight));
 				}
